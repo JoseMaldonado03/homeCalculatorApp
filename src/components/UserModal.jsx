@@ -1,8 +1,10 @@
 import styled from 'styled-components/native';
+import {Alert} from 'react-native';
 import {BUTTON_COLOR} from '../colors';
 import {useContext, useState} from 'react';
 import {UserContext} from '../context/UserContext';
 import Entypo from '@react-native-vector-icons/entypo';
+import {ItemContext} from '../context/ItemContext';
 
 const Container = styled.View`
   background: #fff;
@@ -94,7 +96,27 @@ const Borrar = styled.TouchableOpacity`
 
 function UserModal() {
   const {setShowModal, addUser, removeUser, users} = useContext(UserContext);
+  const {getTotalByUser} = useContext(ItemContext);
   const [userName, setUserName] = useState('');
+
+  const submitUser = () => {
+    if (!userName) {
+      return Alert.alert('Atencion!', 'Escriba el nombre del usuario.');
+    }
+
+    addUser(userName);
+    setUserName('');
+  };
+
+  const deleteUser = index => {
+    console.log({index, getTotalByUser: getTotalByUser(index)});
+
+    if (getTotalByUser(index) > 0) {
+      return Alert.alert('Atencion!', 'Primeramente borre los pagos del user.');
+    }
+
+    removeUser(index);
+  };
 
   return (
     <Container>
@@ -111,11 +133,7 @@ function UserModal() {
           onChangeText={e => setUserName(e)}
           placeholder="Escriba el nombre del usuario"
         />
-        <Submit
-          onPress={() => {
-            addUser(userName);
-            setUserName('');
-          }}>
+        <Submit onPress={submitUser}>
           <SubmitText>Guardar</SubmitText>
         </Submit>
       </Form>
@@ -125,7 +143,7 @@ function UserModal() {
           <ItemText>
             {index + 1}. {u}
           </ItemText>
-          <Borrar onPress={() => removeUser(index)}>
+          <Borrar onPress={() => deleteUser(index)}>
             <Entypo name="circle-with-cross" size={30} />
           </Borrar>
         </Item>

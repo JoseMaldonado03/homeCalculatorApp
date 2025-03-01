@@ -1,4 +1,5 @@
 import {useState, useContext} from 'react';
+import {Alert} from 'react-native';
 import styled from 'styled-components/native';
 import Entypo from '@react-native-vector-icons/entypo';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
@@ -155,13 +156,27 @@ function Form() {
   const {users} = useContext(UserContext);
 
   function guardaInfo(e) {
+    if (!title) {
+      return Alert.alert('Atencion!', 'Escriba el nombre del pago.');
+    }
+
+    if (personas.length == 0) {
+      return Alert.alert('Atencion!', 'Agregue una o más personas.');
+    }
+
+    if (!precio) {
+      return Alert.alert('Atencion!', 'Escriba el precio del pago.');
+    }
+
     addItem({
       title,
       precio: parseInt(precio),
       personas,
     });
+
     setTitle('');
-    e.preventDefault();
+    setPrecio('');
+    setPersonas([]);
   }
 
   const toggleUser = userIndex => {

@@ -41,8 +41,22 @@ const TotalPago = styled.Text`
   font-weight: bold;
 `;
 
+const ResetButton = styled.TouchableOpacity`
+  background: #3e6347;
+  border-radius: 20px;
+  padding: 16px;
+  margin: 32px 0 0;
+`;
+
+const ResetButtonText = styled.Text`
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
 export default function Result() {
-  const {getTotal, getTotalByUser} = useContext(ItemContext);
+  const {getTotal, getTotalByUser, setItems} = useContext(ItemContext);
   const {users} = useContext(UserContext);
 
   if (getTotal() === 0) {
@@ -63,6 +77,10 @@ export default function Result() {
           </TotalPago>
         </Item>
       ))}
+
+      <ResetButton onPress={() => setItems([])}>
+        <ResetButtonText>Reempezar</ResetButtonText>
+      </ResetButton>
     </Container>
   );
 }

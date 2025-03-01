@@ -9,7 +9,9 @@
     "start": "react-native start",
     "test": "jest",
     "emulator": "emulator -avd Medium_Phone_API_35 -no-snapshot-load",
-    "prettier": "prettier --write src"
+    "prettier": "prettier --write src",
+    "pre-release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "release": "cd android && gradlew clean && gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-vector-icons/common": "^11.0.0",
