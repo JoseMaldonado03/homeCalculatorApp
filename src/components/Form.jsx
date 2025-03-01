@@ -189,8 +189,6 @@ function Form() {
     return setPersonas([...personas, userIndex]);
   };
 
-  console.log({personas});
-
   return (
     <Container>
       <FormText

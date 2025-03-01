@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useEffect, useContext} from 'react';
 import styled from 'styled-components/native';
 
 import Form from '../components/Form';
@@ -9,6 +9,8 @@ import {UserContext} from '../context/UserContext';
 import UserModal from '../components/UserModal';
 import Result from '../components/Result';
 import {BACKGROUND} from '../colors';
+import {getData} from '../utils/storage';
+import { ItemContext } from '../context/ItemContext';
 
 const Container = styled.ScrollView`
   padding: 0 16px;
@@ -50,7 +52,13 @@ const UserButtonText = styled.Text`
 `;
 
 function Home() {
-  const {showModal, setShowModal} = useContext(UserContext);
+  const {showModal, setShowModal, loadUsers} = useContext(UserContext);
+  const {loadItems} = useContext(ItemContext);
+
+  useEffect(() => {
+    getData('users').then(users => loadUsers(users));
+    getData('items').then(items => loadItems(items));
+  }, []);
 
   return (
     <Container>

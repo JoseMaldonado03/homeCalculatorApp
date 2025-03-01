@@ -56,7 +56,7 @@ const ResetButtonText = styled.Text`
 `;
 
 export default function Result() {
-  const {getTotal, getTotalByUser, setItems} = useContext(ItemContext);
+  const {getTotal, getTotalByUser, loadItems} = useContext(ItemContext);
   const {users} = useContext(UserContext);
 
   if (getTotal() === 0) {
@@ -78,7 +78,7 @@ export default function Result() {
         </Item>
       ))}
 
-      <ResetButton onPress={() => setItems([])}>
+      <ResetButton onPress={() => loadItems([])}>
         <ResetButtonText>Reempezar</ResetButtonText>
       </ResetButton>
     </Container>

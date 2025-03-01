@@ -109,8 +109,6 @@ function UserModal() {
   };
 
   const deleteUser = index => {
-    console.log({index, getTotalByUser: getTotalByUser(index)});
-
     if (getTotalByUser(index) > 0) {
       return Alert.alert('Atencion!', 'Primeramente borre los pagos del user.');
     }
